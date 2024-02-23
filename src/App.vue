@@ -1,47 +1,34 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import { reactive } from 'vue'
+  import Cabecalho from './components/Cabecalho.vue'
+  import Formulario from './components/Formulario.vue'
+
+  const estado = reactive({
+    operacao: '+',
+    valorA: 0,
+    valorB: 0,
+  })
+
+  const fazConta = () => {
+    switch(estado.operacao){
+      case '+':
+        return estado.valorA + estado.valorB
+      case '-':
+        return estado.valorA - estado.valorB
+      case '/':
+        return estado.valorA / estado.valorB
+      case '*':
+        return estado.valorA * estado.valorB
+    }
+  }
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="container">
+      <Cabecalho />
+      <Formulario :valor-a="evento => estado.valorA = parseInt(evento.target.value)" :valor-b="evento => estado.valorB = parseInt(evento.target.value)" :operacao="evento => estado.operacao = evento.target.value" :faz-conta="fazConta()" />
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
